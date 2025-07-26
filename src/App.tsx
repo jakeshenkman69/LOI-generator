@@ -1,40 +1,7 @@
 import React, { useState } from 'react';
-import { Download, Upload, FileText, Building } from 'lucide-react';
-
-interface FormData {
-  borrowerEntity: string;
-  todaysDate: string;
-  loanNumber: string;
-  subjectPropertyAddress: string;
-  borrowerName: string;
-  propertyType: string;
-  purpose: string;
-  purchasePrice: string;
-  downPayment: string;
-  acquisitionLoanAmount: string;
-  acquisitionLTV: string;
-  interestReserve: string;
-  rehabBudget: string;
-  totalLoanAmount: string;
-  ltv: string;
-  landValue: string;
-  arv: string;
-  loanTerm: string;
-  expirationDate: string;
-  interestRate: string;
-  originationFeePercent: string;
-  brokerFeePercent: string;
-  applicationFee: string;
-  underwritingFee: string;
-  appraisalFee: string;
-  documentFee: string;
-  personalReportsFee: string;
-  inspectionFee: string;
-  budgetReviewFee: string;
-}
 
 const TermSheetGenerator: React.FC = () => {
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState({
     borrowerEntity: '',
     todaysDate: new Date().toLocaleDateString(),
     loanNumber: '',
@@ -63,24 +30,24 @@ const TermSheetGenerator: React.FC = () => {
     documentFee: '750.00',
     personalReportsFee: '450',
     inspectionFee: '250.00',
-    budgetReviewFee: 'NA',
+    budgetReviewFee: 'NA'
   });
 
   const [logo, setLogo] = useState<string | null>(null);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: any) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
+    setFormData(prev => ({
       ...prev,
-      [name]: value,
+      [name]: value
     }));
   };
 
-  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleLogoUpload = (e: any) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = (e) => {
+      reader.onload = (e: any) => {
         if (e.target?.result) {
           setLogo(e.target.result as string);
         }
@@ -192,9 +159,7 @@ const TermSheetGenerator: React.FC = () => {
           </tr>
           <tr>
             <td class="label-column">Property Address</td>
-            <td class="value-column"><strong>${
-              formData.subjectPropertyAddress
-            }</strong></td>
+            <td class="value-column"><strong>${formData.subjectPropertyAddress}</strong></td>
           </tr>
           
           <tr>
@@ -214,9 +179,7 @@ const TermSheetGenerator: React.FC = () => {
           </tr>
           <tr>
             <td class="label-column"><strong>Initial Loan Amount</strong></td>
-            <td class="value-column"><strong>$${
-              formData.acquisitionLoanAmount
-            }</strong></td>
+            <td class="value-column"><strong>$${formData.acquisitionLoanAmount}</strong></td>
           </tr>
           <tr>
             <td class="label-column">Acquisition LTV</td>
@@ -232,9 +195,7 @@ const TermSheetGenerator: React.FC = () => {
           </tr>
           <tr>
             <td class="label-column"><strong>Total Loan Amount</strong></td>
-            <td class="value-column"><strong>$${
-              formData.totalLoanAmount
-            }</strong></td>
+            <td class="value-column"><strong>$${formData.totalLoanAmount}</strong></td>
           </tr>
           <tr>
             <td class="label-column">LTV</td>
@@ -330,9 +291,7 @@ const TermSheetGenerator: React.FC = () => {
         </table>
 
         <div class="footer-text">
-          <p>Full consideration of Applicant's loan request will commence upon receipt by <strong>${
-            formData.borrowerEntity
-          }</strong> of delivery of a copy of this letter to <strong>PFN Lending Group, Inc.</strong> bearing Applicant's signature. After receipt of the signed letter, <strong>PFN Lending Group, Inc.</strong> will commence the loan underwriting process. All of the Third-Party Fees and any additional third-party expenses incurred will be due at the time of the loan closing. Applicant authorizes <strong>PFN Lending Group, Inc.</strong> to disclose information contained herein to <strong>PFN Lending Group, Inc.</strong> affiliates and authorized third parties for everyday business purposes including loan processing and review, financial account dealings and collection quality control and credit reporting, in accordance with <strong>PFN Lending Group, Inc.</strong> privacy policies and as required by law.</p>
+          <p>Full consideration of Applicant's loan request will commence upon receipt by <strong>${formData.borrowerEntity}</strong> of delivery of a copy of this letter to <strong>PFN Lending Group, Inc.</strong> bearing Applicant's signature. After receipt of the signed letter, <strong>PFN Lending Group, Inc.</strong> will commence the loan underwriting process. All of the Third-Party Fees and any additional third-party expenses incurred will be due at the time of the loan closing. Applicant authorizes <strong>PFN Lending Group, Inc.</strong> to disclose information contained herein to <strong>PFN Lending Group, Inc.</strong> affiliates and authorized third parties for everyday business purposes including loan processing and review, financial account dealings and collection quality control and credit reporting, in accordance with <strong>PFN Lending Group, Inc.</strong> privacy policies and as required by law.</p>
 
           <p><strong>PFN Lending Group, Inc.</strong> will obtain a full appraisal of the proposed collateral at the Applicant's expense, to determine if the proposed loan is within the applicable loan-to-value ratio. All appraisals are subject to a final value-determination review that will be conducted by <strong>PFN Lending Group, Inc.</strong> underwriting department. Applicant hereby represents that, to the best of Applicant's knowledge, no toxic or hazardous materials have been released in, on, or about the proposed collateral.</p>
 
@@ -368,7 +327,7 @@ const TermSheetGenerator: React.FC = () => {
     printWindow.document.close();
   };
 
-  const calculateExpirationDate = (): string => {
+  const calculateExpirationDate = () => {
     const today = new Date();
     const expiration = new Date(today);
     expiration.setDate(today.getDate() + 10);
@@ -376,9 +335,9 @@ const TermSheetGenerator: React.FC = () => {
   };
 
   React.useEffect(() => {
-    setFormData((prev) => ({
+    setFormData(prev => ({
       ...prev,
-      expirationDate: calculateExpirationDate(),
+      expirationDate: calculateExpirationDate()
     }));
   }, []);
 
@@ -387,10 +346,8 @@ const TermSheetGenerator: React.FC = () => {
       <div className="max-w-4xl mx-auto px-4">
         <div className="bg-white rounded-lg shadow-lg p-8">
           <div className="flex items-center mb-8">
-            <Building className="mr-3 text-blue-600" size={32} />
-            <h1 className="text-3xl font-bold text-gray-900">
-              Term Sheet Generator
-            </h1>
+            <span className="mr-3 text-blue-600 text-3xl">🏢</span>
+            <h1 className="text-3xl font-bold text-gray-900">Term Sheet Generator</h1>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -398,14 +355,12 @@ const TermSheetGenerator: React.FC = () => {
             <div className="space-y-6">
               <div className="bg-blue-50 p-4 rounded-lg">
                 <h2 className="text-lg font-semibold text-blue-900 mb-4 flex items-center">
-                  <FileText className="mr-2" size={20} />
+                  <span className="mr-2">📄</span>
                   Loan Information
                 </h2>
                 <div className="grid grid-cols-1 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Borrower's Entity
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Borrower's Entity</label>
                     <input
                       type="text"
                       name="borrowerEntity"
@@ -416,9 +371,7 @@ const TermSheetGenerator: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Borrower Name
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Borrower Name</label>
                     <input
                       type="text"
                       name="borrowerName"
@@ -429,9 +382,7 @@ const TermSheetGenerator: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Loan Number
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Loan Number</label>
                     <input
                       type="text"
                       name="loanNumber"
@@ -445,14 +396,10 @@ const TermSheetGenerator: React.FC = () => {
               </div>
 
               <div className="bg-green-50 p-4 rounded-lg">
-                <h3 className="text-lg font-semibold text-green-900 mb-4">
-                  Property Information
-                </h3>
+                <h3 className="text-lg font-semibold text-green-900 mb-4">Property Information</h3>
                 <div className="grid grid-cols-1 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Property Address
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Property Address</label>
                     <input
                       type="text"
                       name="subjectPropertyAddress"
@@ -463,9 +410,7 @@ const TermSheetGenerator: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Property Type
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Property Type</label>
                     <input
                       type="text"
                       name="propertyType"
@@ -476,9 +421,7 @@ const TermSheetGenerator: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Purpose
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Purpose</label>
                     <input
                       type="text"
                       name="purpose"
@@ -492,14 +435,10 @@ const TermSheetGenerator: React.FC = () => {
               </div>
 
               <div className="bg-yellow-50 p-4 rounded-lg">
-                <h3 className="text-lg font-semibold text-yellow-900 mb-4">
-                  Financial Details
-                </h3>
+                <h3 className="text-lg font-semibold text-yellow-900 mb-4">Financial Details</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Purchase Price
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Purchase Price</label>
                     <input
                       type="text"
                       name="purchasePrice"
@@ -510,9 +449,7 @@ const TermSheetGenerator: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Down Payment
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Down Payment</label>
                     <input
                       type="text"
                       name="downPayment"
@@ -523,9 +460,7 @@ const TermSheetGenerator: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Acquisition Loan Amount
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Acquisition Loan Amount</label>
                     <input
                       type="text"
                       name="acquisitionLoanAmount"
@@ -536,9 +471,7 @@ const TermSheetGenerator: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Acquisition LTV (%)
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Acquisition LTV (%)</label>
                     <input
                       type="text"
                       name="acquisitionLTV"
@@ -549,9 +482,7 @@ const TermSheetGenerator: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Interest Reserve
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Interest Reserve</label>
                     <input
                       type="text"
                       name="interestReserve"
@@ -562,9 +493,7 @@ const TermSheetGenerator: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Rehab Budget
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Rehab Budget</label>
                     <input
                       type="text"
                       name="rehabBudget"
@@ -575,9 +504,7 @@ const TermSheetGenerator: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Total Loan Amount
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Total Loan Amount</label>
                     <input
                       type="text"
                       name="totalLoanAmount"
@@ -588,9 +515,7 @@ const TermSheetGenerator: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      LTV
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">LTV</label>
                     <input
                       type="text"
                       name="ltv"
@@ -601,9 +526,7 @@ const TermSheetGenerator: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      As Is Value
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">As Is Value</label>
                     <input
                       type="text"
                       name="landValue"
@@ -614,9 +537,7 @@ const TermSheetGenerator: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      After Repaired Value (ARV)
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">After Repaired Value (ARV)</label>
                     <input
                       type="text"
                       name="arv"
@@ -633,14 +554,10 @@ const TermSheetGenerator: React.FC = () => {
             {/* Right Column */}
             <div className="space-y-6">
               <div className="bg-purple-50 p-4 rounded-lg">
-                <h3 className="text-lg font-semibold text-purple-900 mb-4">
-                  Loan Terms
-                </h3>
+                <h3 className="text-lg font-semibold text-purple-900 mb-4">Loan Terms</h3>
                 <div className="grid grid-cols-1 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Loan Term
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Loan Term</label>
                     <input
                       type="text"
                       name="loanTerm"
@@ -651,9 +568,7 @@ const TermSheetGenerator: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Interest Rate
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Interest Rate</label>
                     <input
                       type="text"
                       name="interestRate"
@@ -664,9 +579,7 @@ const TermSheetGenerator: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Expiration Date
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Expiration Date</label>
                     <input
                       type="text"
                       name="expirationDate"
@@ -679,14 +592,10 @@ const TermSheetGenerator: React.FC = () => {
               </div>
 
               <div className="bg-red-50 p-4 rounded-lg">
-                <h3 className="text-lg font-semibold text-red-900 mb-4">
-                  Fees
-                </h3>
+                <h3 className="text-lg font-semibold text-red-900 mb-4">Fees</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Origination Fee (%)
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Origination Fee (%)</label>
                     <input
                       type="text"
                       name="originationFeePercent"
@@ -697,9 +606,7 @@ const TermSheetGenerator: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Broker Fee (%)
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Broker Fee (%)</label>
                     <input
                       type="text"
                       name="brokerFeePercent"
@@ -710,9 +617,7 @@ const TermSheetGenerator: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Application Fee
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Application Fee</label>
                     <input
                       type="text"
                       name="applicationFee"
@@ -722,9 +627,7 @@ const TermSheetGenerator: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Underwriting Fee
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Underwriting Fee</label>
                     <input
                       type="text"
                       name="underwritingFee"
@@ -734,9 +637,7 @@ const TermSheetGenerator: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Appraisal Fee
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Appraisal Fee</label>
                     <input
                       type="text"
                       name="appraisalFee"
@@ -747,9 +648,7 @@ const TermSheetGenerator: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Document Fee
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Document Fee</label>
                     <input
                       type="text"
                       name="documentFee"
@@ -763,7 +662,7 @@ const TermSheetGenerator: React.FC = () => {
 
               <div className="bg-gray-50 p-4 rounded-lg">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                  <Upload className="mr-2" size={20} />
+                  <span className="mr-2">📤</span>
                   Company Logo
                 </h3>
                 <input
@@ -774,11 +673,7 @@ const TermSheetGenerator: React.FC = () => {
                 />
                 {logo && (
                   <div className="mt-4 text-center">
-                    <img
-                      src={logo}
-                      alt="Company Logo"
-                      className="max-w-32 max-h-24 mx-auto border rounded"
-                    />
+                    <img src={logo} alt="Company Logo" className="max-w-32 max-h-24 mx-auto border rounded" />
                   </div>
                 )}
               </div>
@@ -787,7 +682,7 @@ const TermSheetGenerator: React.FC = () => {
                 onClick={generatePDF}
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg flex items-center justify-center text-lg transition-colors"
               >
-                <Download className="mr-2" size={20} />
+                <span className="mr-2">⬇️</span>
                 Generate Term Sheet PDF
               </button>
             </div>
