@@ -65,60 +65,124 @@ const TermSheetGenerator: React.FC = () => {
       <head>
         <title>Term Sheet - ${formData.borrowerEntity}</title>
         <style>
+          @page {
+            margin: 0.75in;
+            size: letter;
+          }
+          
           body {
             font-family: Arial, sans-serif;
-            margin: 40px;
-            line-height: 1.4;
-            color: #333;
+            margin: 0;
+            padding: 0;
+            line-height: 1.2;
+            color: #000;
+            font-size: 11pt;
           }
+          
           .header {
             text-align: center;
-            margin-bottom: 30px;
-          }
-          .logo {
-            max-width: 200px;
-            max-height: 100px;
             margin-bottom: 20px;
           }
-          .title-section {
-            text-align: left;
-            margin-bottom: 30px;
+          
+          .logo {
+            max-width: 150px;
+            max-height: 75px;
+            margin-bottom: 15px;
           }
+          
+          .title-section {
+            margin-bottom: 20px;
+            line-height: 1.3;
+          }
+          
+          .title-section p {
+            margin: 0 0 8px 0;
+          }
+          
           .term-sheet-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
+            margin: 15px 0;
+            font-size: 10pt;
           }
+          
           .term-sheet-table td {
             border: 1px solid #000;
-            padding: 8px;
+            padding: 6px 8px;
             vertical-align: top;
           }
+          
           .section-header {
-            background-color: #f5f5f5;
+            background-color: #ffffff;
             font-weight: bold;
             text-align: center;
+            padding: 8px;
+            font-size: 11pt;
           }
+          
           .label-column {
-            width: 30%;
-            font-weight: bold;
-            background-color: #f9f9f9;
+            width: 40%;
+            padding-left: 25px;
+            background-color: #ffffff;
+            font-size: 10pt;
           }
+          
           .value-column {
-            width: 70%;
+            width: 60%;
+            background-color: #ffffff;
+            font-size: 10pt;
           }
+          
           .footer-text {
-            margin-top: 30px;
+            margin-top: 20px;
             text-align: justify;
-            font-size: 12px;
-            line-height: 1.5;
+            font-size: 9pt;
+            line-height: 1.4;
           }
+          
+          .footer-text p {
+            margin: 8px 0;
+          }
+          
           .signature-section {
-            margin-top: 40px;
+            margin-top: 30px;
+            font-size: 10pt;
           }
+          
+          .signature-lines {
+            margin-top: 40px;
+            display: table;
+            width: 100%;
+          }
+          
+          .signature-box {
+            display: table-cell;
+            width: 50%;
+            padding-right: 20px;
+            vertical-align: top;
+          }
+          
+          .signature-line {
+            border-bottom: 1px solid #000;
+            height: 30px;
+            margin-bottom: 5px;
+          }
+          
+          .signature-label {
+            font-size: 9pt;
+            margin-bottom: 8px;
+          }
+          
           @media print {
-            body { margin: 20px; }
+            body { 
+              margin: 0; 
+              -webkit-print-color-adjust: exact;
+              print-color-adjust: exact;
+            }
             .no-print { display: none; }
+            .page-break {
+              page-break-before: always;
+            }
           }
         </style>
       </head>
@@ -128,13 +192,17 @@ const TermSheetGenerator: React.FC = () => {
         </div>
         
         <div class="title-section">
-          <strong>${formData.borrowerEntity}</strong><br>
-          <strong>${formData.todaysDate}</strong><br>
-          <strong>Loan # ${formData.loanNumber}</strong><br><br>
-          <strong style="font-size: 18px;">TERM SHEET</strong><br><br>
-          <strong>${formData.subjectPropertyAddress}</strong><br><br>
-          Dear <strong>${formData.borrowerName}</strong>,<br><br>
-          PFN Lending Group, Inc., in response to your recent request for credit, has completed its preliminary review of your loan request. We are, at this time, pleased to issue this <strong>NON-BINDING</strong> preliminary Letter of Interest concerning your request. It is our understanding that you are applying for and would accept a loan with the following terms:
+          <p><strong>${formData.borrowerEntity}</strong></p>
+          <p><strong>${formData.todaysDate}</strong></p>
+          <p><strong>Loan # ${formData.loanNumber}</strong></p>
+          <p></p>
+          <p><strong style="font-size: 14pt;">TERM SHEET</strong></p>
+          <p></p>
+          <p><strong>${formData.subjectPropertyAddress}</strong></p>
+          <p></p>
+          <p>Dear <strong>${formData.borrowerName}</strong>,</p>
+          <p></p>
+          <p>PFN Lending Group, Inc., in response to your recent request for credit, has completed its preliminary review of your loan request. We are, at this time, pleased to issue this <strong>NON-BINDING</strong> preliminary Letter of Interest concerning your request. It is our understanding that you are applying for and would accept a loan with the following terms:</p>
         </div>
 
         <table class="term-sheet-table">
@@ -175,11 +243,11 @@ const TermSheetGenerator: React.FC = () => {
           </tr>
           <tr>
             <td class="label-column">Deposit on Acquisition</td>
-            <td class="value-column">$${formData.downPayment}</td>
+            <td class="value-column">${formData.downPayment}</td>
           </tr>
           <tr>
             <td class="label-column"><strong>Initial Loan Amount</strong></td>
-            <td class="value-column"><strong>$${formData.acquisitionLoanAmount}</strong></td>
+            <td class="value-column"><strong>${formData.acquisitionLoanAmount}</strong></td>
           </tr>
           <tr>
             <td class="label-column">Acquisition LTV</td>
@@ -187,15 +255,15 @@ const TermSheetGenerator: React.FC = () => {
           </tr>
           <tr>
             <td class="label-column">Interest Reserve</td>
-            <td class="value-column">$${formData.interestReserve}</td>
+            <td class="value-column">${formData.interestReserve}</td>
           </tr>
           <tr>
             <td class="label-column">Rehab Funds</td>
-            <td class="value-column">$${formData.rehabBudget}</td>
+            <td class="value-column">${formData.rehabBudget}</td>
           </tr>
           <tr>
             <td class="label-column"><strong>Total Loan Amount</strong></td>
-            <td class="value-column"><strong>$${formData.totalLoanAmount}</strong></td>
+            <td class="value-column"><strong>${formData.totalLoanAmount}</strong></td>
           </tr>
           <tr>
             <td class="label-column">LTV</td>
@@ -207,7 +275,7 @@ const TermSheetGenerator: React.FC = () => {
           </tr>
           <tr>
             <td class="label-column">As Is Value</td>
-            <td class="value-column">$${formData.landValue}</td>
+            <td class="value-column">${formData.landValue}</td>
           </tr>
           <tr>
             <td class="label-column">After Repaired Value</td>
@@ -247,19 +315,19 @@ const TermSheetGenerator: React.FC = () => {
           </tr>
           <tr>
             <td class="label-column">Application</td>
-            <td class="value-column">$${formData.applicationFee}</td>
+            <td class="value-column">${formData.applicationFee}</td>
           </tr>
           <tr>
             <td class="label-column">Underwriting</td>
-            <td class="value-column">$${formData.underwritingFee}</td>
+            <td class="value-column">${formData.underwritingFee}</td>
           </tr>
           <tr>
             <td class="label-column">Appraisal</td>
-            <td class="value-column">$${formData.appraisalFee}</td>
+            <td class="value-column">${formData.appraisalFee}</td>
           </tr>
           <tr>
             <td class="label-column">Loan Document Fee</td>
-            <td class="value-column">$${formData.documentFee}</td>
+            <td class="value-column">${formData.documentFee}</td>
           </tr>
           <tr>
             <td class="label-column">Title / Taxes / Liens / Closing Fee</td>
@@ -267,7 +335,7 @@ const TermSheetGenerator: React.FC = () => {
           </tr>
           <tr>
             <td class="label-column">Personal/Business Reports</td>
-            <td class="value-column">$${formData.personalReportsFee}</td>
+            <td class="value-column">${formData.personalReportsFee}</td>
           </tr>
           
           <tr>
@@ -275,7 +343,379 @@ const TermSheetGenerator: React.FC = () => {
           </tr>
           <tr>
             <td class="label-column">Insp. Per Draw</td>
-            <td class="value-column">$${formData.inspectionFee}</td>
+            <td class="value-column">${formData.inspectionFee ? '
+
+    printWindow.document.write(termSheetHTML);
+    printWindow.document.close();
+  };
+
+  const calculateExpirationDate = () => {
+    const today = new Date();
+    const expiration = new Date(today);
+    expiration.setDate(today.getDate() + 10);
+    return expiration.toLocaleDateString();
+  };
+
+  React.useEffect(() => {
+    setFormData(prev => ({
+      ...prev,
+      expirationDate: calculateExpirationDate()
+    }));
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="max-w-4xl mx-auto px-4">
+        <div className="bg-white rounded-lg shadow-lg p-8">
+          <div className="flex items-center mb-8">
+            <span className="mr-3 text-blue-600 text-3xl">🏢</span>
+            <h1 className="text-3xl font-bold text-gray-900">Term Sheet Generator</h1>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Form Section */}
+            <div className="space-y-6">
+              <div className="bg-blue-50 p-4 rounded-lg">
+                <h2 className="text-lg font-semibold text-blue-900 mb-4 flex items-center">
+                  <span className="mr-2">📄</span>
+                  Loan Information
+                </h2>
+                <div className="grid grid-cols-1 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Borrower's Entity</label>
+                    <input
+                      type="text"
+                      name="borrowerEntity"
+                      value={formData.borrowerEntity}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Enter borrower's entity name"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Borrower Name</label>
+                    <input
+                      type="text"
+                      name="borrowerName"
+                      value={formData.borrowerName}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Enter borrower's name"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Loan Number</label>
+                    <input
+                      type="text"
+                      name="loanNumber"
+                      value={formData.loanNumber}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Enter loan number"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-green-50 p-4 rounded-lg">
+                <h3 className="text-lg font-semibold text-green-900 mb-4">Property Information</h3>
+                <div className="grid grid-cols-1 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Property Address</label>
+                    <input
+                      type="text"
+                      name="subjectPropertyAddress"
+                      value={formData.subjectPropertyAddress}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Enter property address"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Property Type</label>
+                    <input
+                      type="text"
+                      name="propertyType"
+                      value={formData.propertyType}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="e.g., Single Family Home, Commercial Property"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Purpose</label>
+                    <input
+                      type="text"
+                      name="purpose"
+                      value={formData.purpose}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="e.g., Purchase, Refinance, Rehab"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-yellow-50 p-4 rounded-lg">
+                <h3 className="text-lg font-semibold text-yellow-900 mb-4">Financial Details</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Purchase Price</label>
+                    <input
+                      type="text"
+                      name="purchasePrice"
+                      value={formData.purchasePrice}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="$000,000"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Down Payment</label>
+                    <input
+                      type="text"
+                      name="downPayment"
+                      value={formData.downPayment}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="000,000"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Acquisition Loan Amount</label>
+                    <input
+                      type="text"
+                      name="acquisitionLoanAmount"
+                      value={formData.acquisitionLoanAmount}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="000,000"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Acquisition LTV (%)</label>
+                    <input
+                      type="text"
+                      name="acquisitionLTV"
+                      value={formData.acquisitionLTV}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="00"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Interest Reserve</label>
+                    <input
+                      type="text"
+                      name="interestReserve"
+                      value={formData.interestReserve}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="00,000"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Rehab Budget</label>
+                    <input
+                      type="text"
+                      name="rehabBudget"
+                      value={formData.rehabBudget}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="00,000"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Total Loan Amount</label>
+                    <input
+                      type="text"
+                      name="totalLoanAmount"
+                      value={formData.totalLoanAmount}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="000,000"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">LTV</label>
+                    <input
+                      type="text"
+                      name="ltv"
+                      value={formData.ltv}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="00%"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">As Is Value</label>
+                    <input
+                      type="text"
+                      name="landValue"
+                      value={formData.landValue}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="000,000"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">After Repaired Value (ARV)</label>
+                    <input
+                      type="text"
+                      name="arv"
+                      value={formData.arv}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="000,000"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column */}
+            <div className="space-y-6">
+              <div className="bg-purple-50 p-4 rounded-lg">
+                <h3 className="text-lg font-semibold text-purple-900 mb-4">Loan Terms</h3>
+                <div className="grid grid-cols-1 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Loan Term</label>
+                    <input
+                      type="text"
+                      name="loanTerm"
+                      value={formData.loanTerm}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="e.g., 12 months"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Interest Rate</label>
+                    <input
+                      type="text"
+                      name="interestRate"
+                      value={formData.interestRate}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="0.00%"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Expiration Date</label>
+                    <input
+                      type="text"
+                      name="expirationDate"
+                      value={formData.expirationDate}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-red-50 p-4 rounded-lg">
+                <h3 className="text-lg font-semibold text-red-900 mb-4">Fees</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Origination Fee (%)</label>
+                    <input
+                      type="text"
+                      name="originationFeePercent"
+                      value={formData.originationFeePercent}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="0.0"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Broker Fee (%)</label>
+                    <input
+                      type="text"
+                      name="brokerFeePercent"
+                      value={formData.brokerFeePercent}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="0.0"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Application Fee</label>
+                    <input
+                      type="text"
+                      name="applicationFee"
+                      value={formData.applicationFee}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Underwriting Fee</label>
+                    <input
+                      type="text"
+                      name="underwritingFee"
+                      value={formData.underwritingFee}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Appraisal Fee</label>
+                    <input
+                      type="text"
+                      name="appraisalFee"
+                      value={formData.appraisalFee}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="000"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Document Fee</label>
+                    <input
+                      type="text"
+                      name="documentFee"
+                      value={formData.documentFee}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                  <span className="mr-2">📤</span>
+                  Company Logo
+                </h3>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleLogoUpload}
+                  className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                />
+                {logo && (
+                  <div className="mt-4 text-center">
+                    <img src={logo} alt="Company Logo" className="max-w-32 max-h-24 mx-auto border rounded" />
+                  </div>
+                )}
+              </div>
+
+              <button
+                onClick={generatePDF}
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg flex items-center justify-center text-lg transition-colors"
+              >
+                <span className="mr-2">⬇️</span>
+                Generate Term Sheet PDF
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default TermSheetGenerator; + formData.inspectionFee : 'NA'}</td>
           </tr>
           <tr>
             <td class="label-column">3rd Party Budget -- Permit Review</td>
@@ -286,7 +726,7 @@ const TermSheetGenerator: React.FC = () => {
             <td colspan="2" class="section-header"><strong>ADDITIONAL APPROVAL REQUIREMENTS:</strong></td>
           </tr>
           <tr>
-            <td colspan="2" style="height: 60px;"></td>
+            <td colspan="2" style="height: 40px; border: none;"></td>
           </tr>
         </table>
 
@@ -314,6 +754,22 @@ const TermSheetGenerator: React.FC = () => {
           <p>Very truly yours,</p>
           <br>
           <p>PFN Lending Group, Inc.</p>
+          
+          <div class="signature-lines">
+            <div class="signature-box">
+              <div class="signature-label">Borrower Signature:</div>
+              <div class="signature-line"></div>
+              <div class="signature-label">${formData.borrowerName}</div>
+              <div class="signature-label">Date: _________________</div>
+            </div>
+            
+            <div class="signature-box">
+              <div class="signature-label">Entity Representative:</div>
+              <div class="signature-line"></div>
+              <div class="signature-label">${formData.borrowerEntity}</div>
+              <div class="signature-label">Date: _________________</div>
+            </div>
+          </div>
         </div>
 
         <div class="no-print" style="margin-top: 30px; text-align: center;">
